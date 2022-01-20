@@ -17,9 +17,11 @@ set(CMAKE_CXX_EXTENSIONS ON)
 # common options for gcc and clang
 add_compile_options(-O3 -Wall -Wextra -Wnull-dereference)
 
-# compiler specific options
-if(CMAKE_COMPILER_IS_GNUCC)
-  add_compile_options(-Wlogical-op -Wshadow -Wuseless-cast -Wsuggest-override)
+# gcc specific options
+if(CMAKE_CXX_COMPILER_ID MATCHES GNU OR CMAKE_C_COMPILER_ID MATCHES GNU)
+  add_compile_options(-Wlogical-op -Wshadow)
+  add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wuseless-cast>)
+  add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-Wsuggest-override>)
 endif()
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Werror-implicit-function-declaration")
